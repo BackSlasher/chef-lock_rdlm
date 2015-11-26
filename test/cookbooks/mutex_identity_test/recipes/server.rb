@@ -19,10 +19,10 @@ bash 'test-rdlm' do
   fi
   # Delete lock
   echo delete lock
-  curl -f -x DELETE "$LOCK_URL"
+  curl -f -X DELETE "$LOCK_URL"
   # Fail to delete again
   echo failing to re-delete lock
-  if curl -f -x DELETE "$LOCK_URL"; then
+  if curl -f -X DELETE "$LOCK_URL"; then
     echo 'managed to delete same lock twice. Bad'
     exit 2
   fi
