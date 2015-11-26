@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: mutex-identity
+# Cookbook Name:: mutex_identity
 # Recipe:: default
 #
 # Copyright (C) 2015 YOUR_NAME

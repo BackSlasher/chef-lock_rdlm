@@ -1,4 +1,4 @@
-# mutex-identity-cookbook
+# mutex_identity-cookbook
 
 Uses an external mutex to assign unique identities to Chef clients.  
 Also supports managing the mutex server using [RDLM](https://github.com/thefab/restful-distributed-lock-manager)
@@ -57,7 +57,7 @@ For mutex server: Tested on CentOS 6.7.
 
 ## Recipes
 
-### mutex-identity::server
+### mutex_identity::server
 Installs and configures the simple RDLM server.  
 It uses the `['identity-mutex']['port']` attribute to determine the port the daemon will be listening on.  
 I'm using an init file tested on CentOS 6.7.  
