@@ -6,8 +6,7 @@ provisioner:
   name: chef_solo
 
 platforms:
-  - name: ubuntu-14.04
-  - name: centos-7.1
+  - name: centos-6.7
 
 suites:
   - name: server
@@ -17,3 +16,5 @@ suites:
     attributes:
       mutex_identity:
         port: 7305
+    include:
+      - centos-6.7
