@@ -1,4 +1,4 @@
-# mutex_identity-cookbook
+# mutex_identity cookbook
 
 Uses an external mutex to assign unique identities to Chef clients.  
 Also supports managing the mutex server using [RDLM](https://github.com/thefab/restful-distributed-lock-manager)
