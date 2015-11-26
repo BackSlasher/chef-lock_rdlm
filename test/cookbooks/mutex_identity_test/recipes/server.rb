@@ -2,7 +2,7 @@
 
 execute 'service rdlm-daemon status' # Should exit with 0
 
-bash_script 'test-rdlm' do
+bash 'test-rdlm' do
   code <<-EOT
   set -e
   PORT=#{node['mutex_identity']['port']}
