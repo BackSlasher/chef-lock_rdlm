@@ -64,7 +64,7 @@ I'm using an init file tested on CentOS 6.7.
 
 ## Library resources
 
-### `MutexIdentity::AssignIdentity(node,assignment_path,range,*additional_config)`
+### `MutexIdentity::assign_identity(node,assignment_path,range,*additional_config)`
 Used to assign a unique identity.  
 Additional (optional) parameters:
 
@@ -108,7 +108,7 @@ Assuming a working and reachable mutex server:
 9. Release mutex
 10. Return 3
 
-### `MutexIdentity::FindDuplicates(node,assignment_path,only_me=false)`
+### `MutexIdentity::find_duplicates(node,assignment_path,only_me=false)`
 Used to enforce uniqueness of the identity attribute without modifying anything.  
 Is useful in monitoring.  
 `only_me` is used to cotrol whether to ensure only the current node is unique, or check all nodes in the Chef server.  
