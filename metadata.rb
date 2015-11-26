@@ -1,0 +1,7 @@
+name             'mutex-identity'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures mutex-identity'
+long_description 'Installs/Configures mutex-identity'
+version          '0.1.0'
