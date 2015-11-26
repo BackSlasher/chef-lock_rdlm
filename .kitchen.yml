@@ -10,6 +10,10 @@ platforms:
   - name: centos-7.1
 
 suites:
-  - name: default
+  - name: server
     run_list:
+      - mutex_identity::server
+      - mutex_identity_test::server
     attributes:
+      mutex_identity:
+        port: 7305
