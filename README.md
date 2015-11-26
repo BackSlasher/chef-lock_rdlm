@@ -19,35 +19,35 @@ For mutex server: Tested on CentOS 6.7.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['identity-mutex']['scheme']</tt></td>
+    <td><tt>['mutex_identity']['scheme']</tt></td>
     <td>String</td>
     <td>Clients</td>
     <td>Default for mutex scheme</td>
     <td><tt>http</tt></td>
   </tr>
   <tr>
-    <td><tt>['identity-mutex']['hostname']</tt></td>
+    <td><tt>['mutex_identity']['hostname']</tt></td>
     <td>String</td>
     <td>Clients</td>
     <td>Default for mutex server name</td>
     <td><tt>nil</tt></td>
   </tr>
   <tr>
-    <td><tt>['identity-mutex']['port']</tt></td>
+    <td><tt>['mutex_identity']['port']</tt></td>
     <td>Integer</td>
     <td>Server and Clients</td>
     <td>Port for mutex server. Used as default by clients</td>
     <td><tt>7305</tt></td>
   </tr>
   <tr>
-    <td><tt>['identity-mutex']['wait']</tt></td>
+    <td><tt>['mutex_identity']['wait']</tt></td>
     <td>Integer</td>
     </td>Clients</td>
     <td>Default for number of seconds to wait to acquire the lock before raising an error</td>
     <td><tt>5</tt></td>
   </tr>
   <tr>
-    <td><tt>['identity-mutex']['lifetime']</tt></td>
+    <td><tt>['mutex_identity']['lifetime']</tt></td>
     <td>Integer</td>
     <td>Clients</td>
     <td>Default for how long the lock holds before expiring</td>
@@ -59,7 +59,7 @@ For mutex server: Tested on CentOS 6.7.
 
 ### mutex_identity::server
 Installs and configures the simple RDLM server.  
-It uses the `['identity-mutex']['port']` attribute to determine the port the daemon will be listening on.  
+It uses the `['mutex_identity']['port']` attribute to determine the port the daemon will be listening on.  
 I'm using an init file tested on CentOS 6.7.  
 
 ## Library resources
@@ -69,8 +69,8 @@ Used to assign a unique identity.
 Additional (optional) parameters:
 
 * `mutex_url`: How to reach the mutex server. Defaults to building the url from attributes (if possible)
-* `mutex_wait`: Number of seconds to wait to acquire the lock before raising an error. Defaults to `node['identity-mutex']['wait']`
-* `mutex_lifetime`: Number of seconds before the lock will expire on its own. Defaults to `node['identity-mutex']['lifetime']`
+* `mutex_wait`: Number of seconds to wait to acquire the lock before raising an error. Defaults to `node['mutex_identity']['wait']`
+* `mutex_lifetime`: Number of seconds before the lock will expire on its own. Defaults to `node['mutex_identity']['lifetime']`
 
 #### Resulting effects
 Upon successful completion of the function, this node will be assigned a unique identity in its node object.  
