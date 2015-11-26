@@ -8,9 +8,9 @@ bash 'test-rdlm' do
   PORT=#{node['mutex_identity']['port']}
   # Get lock
   echo get lock
-  RAW_LOCK=$(curl -sI -f -d '{"title": "client", "wait": 5, "lifetime": 300}' http://localhost:$PORT/locks/testy)
+  RAW_LOCK=$(curl -f -d '{"title": "client", "wait": 5, "lifetime": 300}' http://localhost:$PORT/locks/testy -si)
   echo extract lock url
-  LOCK_URL=$(echo "$RAW_LOCK" | perl -ne 'print $1 if /^Location: (.*)$/')
+  LOCK_URL=$(echo "$RAW_LOCK" | perl -ne 'print $1 if /^Location: ((\\w|\\/|:)+)(.*)/')
   # Fail to get another lock
   echo failing another lock
   if curl -sI -f -d '{"title": "different client", "wait": 5, "lifetime": 300}' http://localhost:$PORT/locks/testy; then
