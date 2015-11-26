@@ -122,5 +122,5 @@ If there are duplicates, the returned result is a hash, where the key is the dup
 ```
 
 ## License and Authors
-
-Author:: YOUR_NAME (<YOUR_EMAIL>)
+Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)
+Author:: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net/))
