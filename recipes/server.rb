@@ -1,4 +1,4 @@
-#
+
 # Cookbook Name:: mutex_identity
 # Recipe:: server
 #
@@ -11,10 +11,16 @@ user 'rdlm' do
   system true
 end
 
+python_runtime '2' do
+  provider :system
+  pip_version true
+end
+
 python_package 'rdlm'
 
 template '/etc/init.d/rdlm' do
-  source 'rdlm-init.sh'
+  mode '755'
+  source 'rdlm-init.sh.erb'
   notifies :restart,'service[rdlm]'
   variables ({
     port: node['mutex_identity']['port'],
