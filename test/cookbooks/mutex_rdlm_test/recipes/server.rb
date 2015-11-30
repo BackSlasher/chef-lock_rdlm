@@ -2,6 +2,10 @@
 
 execute 'service rdlm status' # Should exit with 0
 
+execute 'service rdlm start' do
+  not_if 'service rdlm status | grep Running'
+end
+
 bash 'test-rdlm' do
   code <<-EOT
   set -e
