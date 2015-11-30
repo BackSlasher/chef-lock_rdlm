@@ -24,5 +24,8 @@ module MutexIdentity
     mutex_lifetime=node['mutex_lifetime']['lifetime']
 
     # Start working
+    current_value =  _get_value(node,assignment_path)
+    return current_value if current_value # abort if value is already set
+    mutex_name = assignment_path.map{|p|p.gsub(/\W|_/,'')}.join
   end
 end
