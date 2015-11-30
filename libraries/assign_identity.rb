@@ -1,4 +1,4 @@
-# cookbook: mutex_identity
+# cookbook: mutex_rdlm
 # library: helpers.rb
 #
 # Author: Nitzan
@@ -6,7 +6,7 @@
 #
 # Assign a unique value to a node's attribute
 
-module MutexIdentity
+module MutexRDLM
   def assign_identity(node,assignment_path,range,*additional_config)
     # parse config
     mutex_url = additional_config.delete(:mutex_url)
@@ -15,12 +15,12 @@ module MutexIdentity
     raise "Unknown options passed: #{additional_config.keys}" if additional_config.keys.any?
 
     unless mutex_url then
-      url_blocks = node['mutex_identity'].values_at(:scheme,:hostname,:port)
+      url_blocks = node['mutex_rdlm'].values_at(:scheme,:hostname,:port)
       raise 'cannot deduce mutex server. Please specify one using attributes or function arguments' if url_blocks.any?{|v|!v}
       mutex_url = "#{url_blocks[0]}://#{url_blocks[1]}:#{url_blocks[2]}"
     end
 
-    mutex_wait||=node['mutex_identity']['wait']
+    mutex_wait||=node['mutex_rdlm']['wait']
     mutex_lifetime=node['mutex_lifetime']['lifetime']
 
     # Start working

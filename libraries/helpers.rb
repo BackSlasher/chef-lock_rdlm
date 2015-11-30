@@ -1,4 +1,4 @@
-# cookbook: mutex_identity
+# cookbook: mutex_rdlm
 # library: helpers.rb
 #
 # Author: Nitzan
@@ -6,7 +6,7 @@
 #
 # Helper methods for mutexing
 
-module MutexIdentity
+module MutexRDLM
   # get value from node
   def _get_value(node,assignment_path)
     node.attributes.merged_attributes(*assignment_path)

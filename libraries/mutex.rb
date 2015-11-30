@@ -1,4 +1,4 @@
-# cookbook: mutex_identity
+# cookbook: mutex_rdlm
 # library: helpers.rb
 #
 # Author: Nitzan
@@ -6,7 +6,7 @@
 #
 # Assign a unique value to a node's attribute
 
-module MutexIdentity
+module MutexRDLM
 
   # Locks a mutex. Returns a mutex object (used to release it) if successful
   def mutex_lock(server,mutex_name,wait,lifetime)

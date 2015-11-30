@@ -1,4 +1,4 @@
-# mutex_identity cookbook
+# mutex_rdlm cookbook
 
 Uses an external mutex to assign unique identities to Chef clients.  
 Also supports managing the mutex server using [RDLM](https://github.com/thefab/restful-distributed-lock-manager)
@@ -19,35 +19,35 @@ For mutex server: Tested on CentOS 6.7.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['mutex_identity']['scheme']</tt></td>
+    <td><tt>['mutex_rdlm']['scheme']</tt></td>
     <td>String</td>
     <td>Clients</td>
     <td>Default for mutex scheme</td>
     <td><tt>http</tt></td>
   </tr>
   <tr>
-    <td><tt>['mutex_identity']['hostname']</tt></td>
+    <td><tt>['mutex_rdlm']['hostname']</tt></td>
     <td>String</td>
     <td>Clients</td>
     <td>Default for mutex server name</td>
     <td><tt>nil</tt></td>
   </tr>
   <tr>
-    <td><tt>['mutex_identity']['port']</tt></td>
+    <td><tt>['mutex_rdlm']['port']</tt></td>
     <td>Integer</td>
     <td>Server and Clients</td>
     <td>Port for mutex server. Used as default by clients</td>
     <td><tt>7305</tt></td>
   </tr>
   <tr>
-    <td><tt>['mutex_identity']['wait']</tt></td>
+    <td><tt>['mutex_rdlm']['wait']</tt></td>
     <td>Integer</td>
     </td>Clients</td>
     <td>Default for number of seconds to wait to acquire the lock before raising an error</td>
     <td><tt>5</tt></td>
   </tr>
   <tr>
-    <td><tt>['mutex_identity']['lifetime']</tt></td>
+    <td><tt>['mutex_rdlm']['lifetime']</tt></td>
     <td>Integer</td>
     <td>Clients</td>
     <td>Default for how long the lock holds before expiring</td>
@@ -57,20 +57,20 @@ For mutex server: Tested on CentOS 6.7.
 
 ## Recipes
 
-### mutex_identity::server
+### mutex_rdlm::server
 Installs and configures the simple RDLM server.  
-It uses the `['mutex_identity']['port']` attribute to determine the port the daemon will be listening on.  
+It uses the `['mutex_rdlm']['port']` attribute to determine the port the daemon will be listening on.  
 I'm using an init file tested on CentOS 6.7.  
 
 ## Library resources
 
-### `MutexIdentity::assign_identity(node,assignment_path,range,*additional_config)`
+### `MutexRDLM::assign_identity(node,assignment_path,range,*additional_config)`
 Used to assign a unique identity.  
 Additional (optional) parameters:
 
 * `mutex_url`: How to reach the mutex server. Defaults to building the url from attributes (if possible)
-* `mutex_wait`: Number of seconds to wait to acquire the lock before raising an error. Defaults to `node['mutex_identity']['wait']`
-* `mutex_lifetime`: Number of seconds before the lock will expire on its own. Defaults to `node['mutex_identity']['lifetime']`
+* `mutex_wait`: Number of seconds to wait to acquire the lock before raising an error. Defaults to `node['mutex_rdlm']['wait']`
+* `mutex_lifetime`: Number of seconds before the lock will expire on its own. Defaults to `node['mutex_rdlm']['lifetime']`
 
 #### Resulting effects
 Upon successful completion of the function, this node will be assigned a unique identity in its node object.  
@@ -108,7 +108,7 @@ Assuming a working and reachable mutex server:
 9. Release mutex
 10. Return 3
 
-### `MutexIdentity::find_duplicates(node,assignment_path,only_me=false)`
+### `MutexRDLM::find_duplicates(node,assignment_path,only_me=false)`
 Used to enforce uniqueness of the identity attribute without modifying anything.  
 Is useful in monitoring.  
 `only_me` is used to cotrol whether to ensure only the current node is unique, or check all nodes in the Chef server.  

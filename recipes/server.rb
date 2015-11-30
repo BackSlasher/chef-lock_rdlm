@@ -1,5 +1,5 @@
 
-# Cookbook Name:: mutex_identity
+# Cookbook Name:: mutex_rdlm
 # Recipe:: server
 #
 # GPLv2, Nitzan Raz
@@ -23,7 +23,7 @@ template '/etc/init.d/rdlm' do
   source 'rdlm-init.sh.erb'
   notifies :restart,'service[rdlm]'
   variables ({
-    port: node['mutex_identity']['port'],
+    port: node['mutex_rdlm']['port'],
     user: 'rdlm',
   })
 end
