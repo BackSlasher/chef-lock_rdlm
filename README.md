@@ -1,6 +1,6 @@
 # mutex_rdlm cookbook
 
-Uses an external mutex to assign unique identities to Chef clients.  
+Contains some functions that work with an external mutex server.  
 Also supports managing the mutex server using [RDLM](https://github.com/thefab/restful-distributed-lock-manager)
 
 ## Supported Platforms
@@ -57,26 +57,41 @@ For mutex server: Tested on CentOS 6.7.
 
 ## Recipes
 
-### mutex_rdlm::server
+### mutex\_rdlm::server
 Installs and configures the simple RDLM server.  
 It uses the `['mutex_rdlm']['port']` attribute to determine the port the daemon will be listening on.  
 I'm using an init file tested on CentOS 6.7.  
 
 ## Library resources
 
-### `MutexRDLM::assign_identity(node,assignment_path,range,*additional_config)`
-Used to assign a unique identity.  
-Additional (optional) parameters:
+### Common parameters
+Used to locate the mutex server, appear under `additional_config` in method descriptions:
 
 * `mutex_url`: How to reach the mutex server. Defaults to building the url from attributes (if possible)
 * `mutex_wait`: Number of seconds to wait to acquire the lock before raising an error. Defaults to `node['mutex_rdlm']['wait']`
 * `mutex_lifetime`: Number of seconds before the lock will expire on its own. Defaults to `node['mutex_rdlm']['lifetime']`
 
+### `MutexRDLM::with_mutex(node,mutex_resource,*additional_config)`
+Yields (runs a code block) while locking the resource specified on the mutex.  
+Can be thought of like the [synchronized](https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html) keyword in java.  
+Example:
+```ruby
+# Add apple to databag if it has none
+MutexRDLM::with_mutex(node,'dbvendingjuice') do
+  db=data_bag_item('vending','juice')
+  db['kinds']<<'apple' unless db['kinds'].member? 'apple'
+  db.save
+end
+```
+
+### `MutexRDLM::assign_identity(node,assignment_path,range,*additional_config)`
+Used to assign a unique identity.  
+
 #### Resulting effects
 Upon successful completion of the function, this node will be assigned a unique identity in its node object.  
 The identity will be stored as a node attribute specified by `assignment_path`, where `[:a,0,'bla']` is used to address the node attribute `node[:a][0]['bla']`.  
 The value is selected from `range` and is guranteed to be different from any value currently present on other nodes in the Chef server.  
-Selection is done without concurrency, which is enforced by the RDLM mutex.  
+Selection is done without concurrency, thanks to the mutex.  
 The resulting value is saved on both the current `node` object (for use in other parts of the recipe) and in the server's version of the `node` object immediately, to stop other nodes from choosing the same value. This is important to mention because by default, Chef client only updates the server's version of the `node` object if the run is successful. In our case, this attribute is updated during resource compilation.  
 There are several ways this method can fail:
 
@@ -108,7 +123,7 @@ Assuming a working and reachable mutex server:
 9. Release mutex
 10. Return 3
 
-### `MutexRDLM::find_duplicates(node,assignment_path,only_me=false)`
+### `MutexRDLM::find_duplicate_identity(node,assignment_path,only_me=false)`
 Used to enforce uniqueness of the identity attribute without modifying anything.  
 Is useful in monitoring.  
 `only_me` is used to cotrol whether to ensure only the current node is unique, or check all nodes in the Chef server.  
