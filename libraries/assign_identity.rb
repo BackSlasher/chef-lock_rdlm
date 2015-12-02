@@ -30,7 +30,7 @@ module MutexRDLM
   def self._set_server(node,assignment_path,value)
     s_node = Chef::Node.load(node.name)
     _set_normal(s_node,assignment_path,value)
-    s.save
+    s_node.save
   end
 
   def self.assign_identity(node,assignment_path,range,*additional_config)
