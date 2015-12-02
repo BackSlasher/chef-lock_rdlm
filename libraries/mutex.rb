@@ -12,7 +12,7 @@ module MutexRDLM
   def self.mutex_lock(server,mutex_name,client_name,wait,lifetime)
     require 'net/http'
     uri = URI(server)
-    uri.path="/#{mutex_name}"
+    uri.path="/locks/#{mutex_name}"
     require 'json'
     data = {title: client_name, wait: wait, lifetime: lifetime }.to_json
     resp = Net::HTTP.new(uri.host,uri.port).post(uri,data) #TODO is it sending ok?
