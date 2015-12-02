@@ -1,4 +1,4 @@
-# mutex_rdlm cookbook
+# mutex\_rdlm cookbook
 
 Contains some functions that work with an external mutex server.  
 Also supports managing the mutex server using [RDLM](https://github.com/thefab/restful-distributed-lock-manager)
@@ -42,7 +42,7 @@ For mutex server: Tested on CentOS 6.7.
   <tr>
     <td><tt>['mutex_rdlm']['wait']</tt></td>
     <td>Integer</td>
-    </td>Clients</td>
+    <td>Clients</td>
     <td>Default for number of seconds to wait to acquire the lock before raising an error</td>
     <td><tt>5</tt></td>
   </tr>
