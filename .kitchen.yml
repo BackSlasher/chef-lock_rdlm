@@ -14,7 +14,7 @@ suites:
       - mutex_rdlm::server
       - mutex_rdlm_test::server
     attributes:
-      mutex_identity:
+      mutex_rdlm:
         port: 7305
     include:
       - centos-6.7
