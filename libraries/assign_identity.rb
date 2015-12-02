@@ -17,7 +17,7 @@ module MutexRDLM
     if assignment_path.length==1
       vivid[assignment_path.first]=value
     else
-      _vivid_set(vivid[assignment_path.first],assignment_path.drop(1))
+      _vivid_set(vivid[assignment_path.first],assignment_path.drop(1),value)
     end
   end
 
