@@ -56,7 +56,7 @@ module MutexRDLM
     end
 
     mutex_wait||=node['mutex_rdlm']['wait']
-    mutex_lifetime=node['mutex_rdlm']['lifetime']
+    mutex_lifetime||=node['mutex_rdlm']['lifetime']
 
     # Start working
     mutex=mutex_lock(mutex_url,
