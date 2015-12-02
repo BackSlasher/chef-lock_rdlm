@@ -71,8 +71,14 @@ Used to locate the mutex server, appear under `additional_config` in method desc
 * `mutex_wait`: Number of seconds to wait to acquire the lock before raising an error. Defaults to `node['mutex_rdlm']['wait']`
 * `mutex_lifetime`: Number of seconds before the lock will expire on its own. Defaults to `node['mutex_rdlm']['lifetime']`
 
-### `MutexRDLM::with_mutex(node,mutex_resource,*additional_config)`
+### MutexRDLM::with\_mutex
 Yields (runs a code block) while locking the resource specified on the mutex.  
+Parameters:
+
+* `node`: Calling node's object
+* `mutex_resource`: name for mutex
+* `additional_config`: Detailed above
+
 Can be thought of like the [synchronized](https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html) keyword in java.  
 Example:
 ```ruby
@@ -84,8 +90,15 @@ MutexRDLM::with_mutex(node,'dbvendingjuice') do
 end
 ```
 
-### `MutexRDLM::assign_identity(node,assignment_path,range,*additional_config)`
+### MutexRDLM::assign\_identity
+
 Used to assign a unique identity.  
+Parameters:
+
+* `node`: Calling node's object
+* `assignment_path`: Path for attribute to store unique value in
+* `range`: Pool of possibe values
+* `additional_config`: Detailed above
 
 #### Resulting effects
 Upon successful completion of the function, this node will be assigned a unique identity in its node object.  
