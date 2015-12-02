@@ -33,7 +33,7 @@ module MutexRDLM
   def self.mutex_release(mutex_object)
     require 'net/http'
     uri = URI(mutex_object)
-    resp = Net::HTTP.new(uri.host,uri.port).get(uri)
+    resp = Net::HTTP.new(uri.host,uri.port).delete(uri)
     if resp.code == '204'
       return
     elsif resp.code == '404'
