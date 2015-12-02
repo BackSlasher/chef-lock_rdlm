@@ -26,7 +26,7 @@ module MutexRDLM
     elsif resp.code == '400'
       raise 'Bad lock request' #TODO use my exception
     else
-      raise "Unknown response #{resp}" #TODO use my exception
+      raise "Unknown response #{resp.code}" #TODO use my exception
     end
   end
 
@@ -39,7 +39,7 @@ module MutexRDLM
     elsif resp.code == '404'
       raise 'Lock not found' #TODO use my exception
     else
-      raise "Unknown response #{resp}"
+      raise "Unknown response #{resp.code}"
     end
   end
 
