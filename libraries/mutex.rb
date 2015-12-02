@@ -9,7 +9,7 @@
 module MutexRDLM
 
   # Locks a mutex. Returns a mutex object (used to release it) if successful
-  def mutex_lock(server,mutex_name,client_name,wait,lifetime)
+  def self.mutex_lock(server,mutex_name,client_name,wait,lifetime)
     require 'net/http'
     uri = URI(server)
     uri.path="/#{mutex_name}"
@@ -30,7 +30,7 @@ module MutexRDLM
     end
   end
 
-  def mutex_release(mutex_object)
+  def self.mutex_release(mutex_object)
     require 'net/http'
     uri = URI(mutex_object)
     resp = Net::HTTP.new(uri.host,uri.port).get(uri)
@@ -43,11 +43,11 @@ module MutexRDLM
     end
   end
 
-  def _normalize_name(source)
+  def self._normalize_name(source)
     source.gsub(/\W|_/,'')
   end
 
-  def with_mutex(node,mutex_resource,*additional_config)
+  def self.with_mutex(node,mutex_resource,*additional_config)
     # parse config
     mutex_url = additional_config.delete(:mutex_url)
     mutex_wait = additional_config.delete(:mutex_wait)
