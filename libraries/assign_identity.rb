@@ -56,4 +56,17 @@ module MutexRDLM
       end
     end
   end
+
+  def self.find_duplicate_identity(node,assignment_path,only_me: false, *additional_config)
+    with_mutex(node,assignment_path.join,*additional_config) do
+      existing_map = node_names.map do |name|
+        n = Chef::Node.load(name)
+        val = _get_value(n,assignment_path)
+        [n,val]
+      end
+      grouped = existing_map.group_by{|v|v[1]}.map{|k,v|[k,v.map{|i|i[0]}]}.to_h
+      dups = grouped.select{|k,v|v.count>1}
+      return dups.empty? ? nil : dups
+    end
+  end
 end
