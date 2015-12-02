@@ -30,6 +30,20 @@ module MutexRDLM
     end
   end
 
+  def self.mutex_check(mutex_object)
+    require 'net/http'
+    require 'json'
+    uri = URI(mutex_object)
+    resp = Net::HTTP.new(uri.host,uri.port).get(uri)
+    if resp.code == '404'
+      return nil # no such mutex
+    elsif resp.code == '200'
+      return JSON.parse(resp.body)
+    else
+      raise "Unknown response #{resp.code}" #TODO use my exception
+    end
+  end
+
   def self.mutex_release(mutex_object)
     require 'net/http'
     uri = URI(mutex_object)
