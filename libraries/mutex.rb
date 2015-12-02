@@ -47,12 +47,7 @@ module MutexRDLM
     source.gsub(/\W|_/,'')
   end
 
-  def self.with_mutex(node,mutex_resource,*additional_config)
-    # parse config
-    mutex_url = additional_config.delete(:mutex_url)
-    mutex_wait = additional_config.delete(:mutex_wait)
-    mutex_lifetime = additional_config.delete(:mutex_lifetime)
-    raise "Unknown options passed: #{additional_config.keys}" if additional_config.keys.any? #TODO use special exception
+  def self.with_mutex(node,mutex_resource, mutex_url: nil, mutex_wait: nil, mutex_lifetime: nil)
 
     unless mutex_url then
       url_blocks = node['mutex_rdlm'].values_at(:scheme,:hostname,:port)
