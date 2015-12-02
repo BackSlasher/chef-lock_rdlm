@@ -13,6 +13,7 @@ suites:
     run_list:
       - mutex_rdlm::server
       - mutex_rdlm_test::server
+      - mutex_rdlm_test::function_tests
     attributes:
       mutex_rdlm:
         port: 7305
