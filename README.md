@@ -10,50 +10,13 @@ For mutex server: Tested on CentOS 6.7.
 
 ## Attributes
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Used by</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['mutex_rdlm']['scheme']</tt></td>
-    <td>String</td>
-    <td>Clients</td>
-    <td>Default for mutex scheme</td>
-    <td><tt>http</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['mutex_rdlm']['hostname']</tt></td>
-    <td>String</td>
-    <td>Clients</td>
-    <td>Default for mutex server name</td>
-    <td><tt>nil</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['mutex_rdlm']['port']</tt></td>
-    <td>Integer</td>
-    <td>Server and Clients</td>
-    <td>Port for mutex server. Used as default by clients</td>
-    <td><tt>7305</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['mutex_rdlm']['wait']</tt></td>
-    <td>Integer</td>
-    <td>Clients</td>
-    <td>Default for number of seconds to wait to acquire the lock before raising an error</td>
-    <td><tt>5</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['mutex_rdlm']['lifetime']</tt></td>
-    <td>Integer</td>
-    <td>Clients</td>
-    <td>Default for how long the lock holds before expiring</td>
-    <td><tt>300</tt></td>
-  </tr>
-</table>
+| Key                          | Type    | Used by            | Description                                                                       | Default |
+|:-----------------------------|:--------|:-------------------|:----------------------------------------------------------------------------------|:--------|
+| `['mutex_rdlm']['scheme']`   | String  | Clients            | Default for mutex scheme                                                          | http    |
+| `['mutex_rdlm']['hostname']` | String  | Clients            | Default for mutex server name                                                     | nil     |
+| `['mutex_rdlm']['port']`     | Integer | Server and Clients | Port for mutex server. Used as default by clients                                 | 7305    |
+| `['mutex_rdlm']['wait']`     | Integer | Clients            | Default for number of seconds to wait to acquire the lock before raising an error | 5       |
+| `['mutex_rdlm']['lifetime']` | Integer | Clients            | Default for how logn the lock hols before expiring by itself                      | 300     |
 
 ## Recipes
 
