@@ -158,5 +158,5 @@ If there are duplicates, the hash is composed of a key for the duplicate identit
 ```
 
 ## License and Authors
-Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)
+Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)  
 Author:: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net/))
