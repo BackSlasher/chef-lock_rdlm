@@ -137,10 +137,17 @@ Assuming a working and reachable mutex server:
 9. Release mutex
 10. Return 3
 
-### `MutexRDLM::find_duplicate_identity(node,assignment_path,only_me=false)`
+### MutexRDLM::find\_duplicate\_identity
+Parameters:
+
+* `node`: Calling node's object
+* `assignment_path`: Path for attribute unique value is stored in
+* `only_me`: Only check for conflicts involving my node
+* `additional_config`: Detailed above
+
 Used to enforce uniqueness of the identity attribute without modifying anything.  
 Is useful in monitoring.  
-`only_me` is used to cotrol whether to ensure only the current node is unique, or check all nodes in the Chef server.  
+
 #### Return value
 `nil` if there are no duplicates found.  
 If there are duplicates, the returned result is a hash, where the key is the duplicate identity and the value is an array of nodes holding said value, like this:
