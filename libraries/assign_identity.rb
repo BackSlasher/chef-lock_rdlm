@@ -79,6 +79,7 @@ module MutexRDLM
         select{|v|v[1]}. # Filter no-value
         group_by{|v|v[1]}. # group
         map{|k,v|[k,v.map{|i|i[0]}]}.to_h # hash group
+      grouped.select!{|k,v|v.include?(node.name)} if only_me
       dups = grouped.select{|k,v|v.count>1}
       return dups.empty? ? nil : dups
     end
