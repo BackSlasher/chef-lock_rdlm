@@ -75,7 +75,10 @@ module MutexRDLM
         val = _get_value(n,assignment_path)
         [name,val]
       end
-      grouped = existing_map.group_by{|v|v[1]}.map{|k,v|[k,v.map{|i|i[0]}]}.to_h
+      grouped = existing_map.
+        select{|v|v[1]}. # Filter no-value
+        group_by{|v|v[1]}. # group
+        map{|k,v|[k,v.map{|i|i[0]}]}.to_h # hash group
       dups = grouped.select{|k,v|v.count>1}
       return dups.empty? ? nil : dups
     end
