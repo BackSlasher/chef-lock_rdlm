@@ -57,7 +57,17 @@ module MutexRDLM
     end
   end
 
-  def self.find_duplicate_identity(node,assignment_path,only_me: false, *additional_config)
+  def self.find_duplicate_identity(node,assignment_path, *additional_config)
+
+    # Params
+    only_hash = additional_config.find{|i|i.class==Hash and i[:only_me]}
+    if only_hash
+      only_me = only_hash[:only_me]
+      additional_config.delete(only_hash)
+    else
+      only_me=false
+    end
+
     with_mutex(node,assignment_path.join,*additional_config) do
       existing_map = node_names.map do |name|
         n = Chef::Node.load(name)
