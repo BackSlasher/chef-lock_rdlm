@@ -149,8 +149,8 @@ Used to enforce uniqueness of the identity attribute without modifying anything.
 Is useful in monitoring.  
 
 #### Return value
-`nil` if there are no duplicates found.  
-If there are duplicates, the returned result is a hash, where the key is the duplicate identity and the value is an array of nodes holding said value, like this:
+Empty hash (`{}`) if there are no duplicates.  
+If there are duplicates, the hash is composed of a key for the duplicate identity and the value is an array of nodes holding said value, like this:
 ```ruby
 {
   3 => ['node1.backslasher.net', 'node2.backslasher.net']
