@@ -69,6 +69,7 @@ module MutexRDLM
     end
 
     with_mutex(node,assignment_path.join,*additional_config) do
+      node_names = Chef::Node.list.keys
       existing_map = node_names.map do |name|
         n = Chef::Node.load(name)
         val = _get_value(n,assignment_path)
