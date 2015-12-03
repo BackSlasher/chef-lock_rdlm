@@ -73,7 +73,7 @@ module MutexRDLM
       existing_map = node_names.map do |name|
         n = Chef::Node.load(name)
         val = _get_value(n,assignment_path)
-        [n,val]
+        [name,val]
       end
       grouped = existing_map.group_by{|v|v[1]}.map{|k,v|[k,v.map{|i|i[0]}]}.to_h
       dups = grouped.select{|k,v|v.count>1}
