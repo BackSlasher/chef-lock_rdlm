@@ -77,7 +77,7 @@ Parameters:
 
 * `node`: Calling node's object
 * `mutex_resource`: name for mutex
-* `additional_config`: Detailed above
+* "additional_config" detailed above
 
 Can be thought of like the [synchronized](https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html) keyword in java.  
 Example:
@@ -89,6 +89,7 @@ MutexRDLM::with_mutex(node,'dbvendingjuice') do
   db.save
 end
 ```
+This will ensure the databag has only one `apple` item, even if several clients run this recipe at the same time.
 
 ### MutexRDLM::assign\_identity
 
