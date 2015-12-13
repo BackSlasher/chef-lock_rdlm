@@ -2,19 +2,19 @@
 
 ruby_block 'create-and-delete' do
   block do
-    mutex_name='blob'
-    mu = MutexRDLM.mutex_lock("http://localhost:#{node['mutex_rdlm']['port']}",mutex_name,'nonya',5,300)
-    raise 'Mutex missing' unless MutexRDLM.mutex_check(mu)
-    MutexRDLM.mutex_release(mu)
-    raise 'Mutex lingers' if MutexRDLM.mutex_check(mu)
+    lock_name='blob'
+    mu = MutexRDLM.lock_acquire("http://localhost:#{node['lock_rdlm']['port']}",lock_name,'nonya',5,300)
+    raise 'Mutex missing' unless MutexRDLM.lock_check(mu)
+    MutexRDLM.lock_release(mu)
+    raise 'Mutex lingers' if MutexRDLM.lock_check(mu)
   end
 end
 
-ruby_block 'test-with-mutex' do
+ruby_block 'test-with-lock' do
   block do
-    node.default['mutex_rdlm']['hostname']='localhost'
+    node.default['lock_rdlm']['hostname']='localhost'
     a=3
-    MutexRDLM.with_mutex(node,'blo') {a=4}
-    raise 'did not run via mutex' unless a==4
+    MutexRDLM.with_lock(node,'blo') {a=4}
+    raise 'did not run via lock' unless a==4
   end
 end

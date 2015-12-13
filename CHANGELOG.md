@@ -1,3 +1,6 @@
+# 0.1.2
+- [backslasher] mutex to lock
+
 # 0.1.1
 - [backslasher] Updated README
 

@@ -11,11 +11,11 @@ platforms:
 suites:
   - name: server
     run_list:
-      - mutex_rdlm::server
-      - mutex_rdlm_test::server
-      - mutex_rdlm_test::function_tests
+      - lock_rdlm::server
+      - lock_rdlm_test::server
+      - lock_rdlm_test::function_tests
     attributes:
-      mutex_rdlm:
+      lock_rdlm:
         port: 7305
     include:
       - centos-6.7

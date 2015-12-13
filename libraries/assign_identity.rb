@@ -1,4 +1,4 @@
-# cookbook: mutex_rdlm
+# cookbook: lock_rdlm
 # library: helpers.rb
 #
 # Author: Nitzan
@@ -37,7 +37,7 @@ module MutexRDLM
     current_value =  _get_value(node,assignment_path)
     return current_value if current_value # abort if value is already set
     # We have to invent a new value
-    with_mutex(node,assignment_path.join,*additional_config) do
+    with_lock(node,assignment_path.join,*additional_config) do
       # Find existing values
       node_names = Chef::Node.list.keys
       existing_values = node_names.map do |name|
@@ -68,7 +68,7 @@ module MutexRDLM
       only_me=false
     end
 
-    with_mutex(node,assignment_path.join,*additional_config) do
+    with_lock(node,assignment_path.join,*additional_config) do
       node_names = Chef::Node.list.keys
       existing_map = node_names.map do |name|
         n = Chef::Node.load(name)

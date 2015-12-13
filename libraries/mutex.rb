@@ -1,4 +1,4 @@
-# cookbook: mutex_rdlm
+# cookbook: lock_rdlm
 # library: helpers.rb
 #
 # Author: Nitzan
@@ -8,11 +8,11 @@
 
 module MutexRDLM
 
-  # Locks a mutex. Returns a mutex object (used to release it) if successful
-  def self.mutex_lock(server,mutex_name,client_name,wait,lifetime)
+  # Locks a lock. Returns a lock object (used to release it) if successful
+  def self.lock_acquire(server,lock_name,client_name,wait,lifetime)
     require 'net/http'
     uri = URI(server)
-    uri.path="/locks/#{mutex_name}"
+    uri.path="/locks/#{lock_name}"
     require 'json'
     data = {title: client_name, wait: wait, lifetime: lifetime }.to_json
     resp = Net::HTTP.new(uri.host,uri.port).post(uri,data) #TODO is it sending ok?
@@ -30,13 +30,13 @@ module MutexRDLM
     end
   end
 
-  def self.mutex_check(mutex_object)
+  def self.lock_check(lock_object)
     require 'net/http'
     require 'json'
-    uri = URI(mutex_object)
+    uri = URI(lock_object)
     resp = Net::HTTP.new(uri.host,uri.port).get(uri)
     if resp.code == '404'
-      return nil # no such mutex
+      return nil # no such lock
     elsif resp.code == '200'
       return JSON.parse(resp.body)
     else
@@ -44,9 +44,9 @@ module MutexRDLM
     end
   end
 
-  def self.mutex_release(mutex_object)
+  def self.lock_release(lock_object)
     require 'net/http'
-    uri = URI(mutex_object)
+    uri = URI(lock_object)
     resp = Net::HTTP.new(uri.host,uri.port).delete(uri)
     if resp.code == '204'
       return
@@ -61,26 +61,26 @@ module MutexRDLM
     source.gsub(/\W|_/,'')
   end
 
-  def self.with_mutex(node,mutex_resource, mutex_url: nil, mutex_wait: nil, mutex_lifetime: nil)
+  def self.with_lock(node,lock_resource, lock_url: nil, lock_wait: nil, lock_lifetime: nil)
 
-    unless mutex_url then
-      url_blocks = node['mutex_rdlm'].values_at(:scheme,:hostname,:port)
-      raise 'cannot deduce mutex server. Please specify one using attributes or function arguments' if url_blocks.any?{|v|!v} #TODO use my exception
-      mutex_url = "#{url_blocks[0]}://#{url_blocks[1]}:#{url_blocks[2]}"
+    unless lock_url then
+      url_blocks = node['lock_rdlm'].values_at(:scheme,:hostname,:port)
+      raise 'cannot deduce lock server. Please specify one using attributes or function arguments' if url_blocks.any?{|v|!v} #TODO use my exception
+      lock_url = "#{url_blocks[0]}://#{url_blocks[1]}:#{url_blocks[2]}"
     end
 
-    mutex_wait||=node['mutex_rdlm']['wait']
-    mutex_lifetime||=node['mutex_rdlm']['lifetime']
+    lock_wait||=node['lock_rdlm']['wait']
+    lock_lifetime||=node['lock_rdlm']['lifetime']
 
     # Start working
-    mutex=mutex_lock(mutex_url,
-               _normalize_name(mutex_resource),
+    lock=lock_acquire(lock_url,
+               _normalize_name(lock_resource),
                _normalize_name(node.name),
-               mutex_wait,mutex_lifetime)
+               lock_wait,lock_lifetime)
     begin
       yield if block_given?
-    ensure # Always delete mutex
-      mutex_release(mutex)
+    ensure # Always delete lock
+      lock_release(lock)
     end
   end
 end

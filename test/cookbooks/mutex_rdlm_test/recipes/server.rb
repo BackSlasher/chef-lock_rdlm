@@ -9,7 +9,7 @@ end
 bash 'test-rdlm' do
   code <<-EOT
   set -e
-  PORT=#{node['mutex_rdlm']['port']}
+  PORT=#{node['lock_rdlm']['port']}
   # Get lock
   echo get lock
   RAW_LOCK=$(curl -f -d '{"title": "client", "wait": 5, "lifetime": 300}' http://localhost:$PORT/locks/testy -si)
