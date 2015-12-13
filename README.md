@@ -1,7 +1,7 @@
 # lock\_rdlm cookbook
 
-Contains some functions that work with an external lock server.  
-Also supports managing the lock server using [RDLM](https://github.com/thefab/restful-distributed-lock-manager)
+Uses [RDLM](https://github.com/thefab/restful-distributed-lock-manager) to enforce critical sections between Chef clients.  
+Also supports managing the RDLM server.  
 
 ## Supported Platforms
 
