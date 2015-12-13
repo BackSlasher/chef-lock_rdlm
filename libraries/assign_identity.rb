@@ -6,7 +6,7 @@
 #
 # Assign a unique value to a node's attribute
 
-module MutexRDLM
+module LockRDLM
   # get value from node
   def self._get_value(node,assignment_path)
     node.attributes.merged_attributes(*assignment_path)

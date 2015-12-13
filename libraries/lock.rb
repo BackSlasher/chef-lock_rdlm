@@ -6,7 +6,7 @@
 #
 # Assign a unique value to a node's attribute
 
-module MutexRDLM
+module LockRDLM
 
   # Locks a lock. Returns a lock object (used to release it) if successful
   def self.lock_acquire(server,lock_name,client_name,wait,lifetime)

@@ -34,7 +34,7 @@ Used to locate the lock server, appear under `additional_config` in method descr
 * `lock_wait`: Number of seconds to wait to acquire the lock before raising an error. Defaults to `node['lock_rdlm']['wait']`
 * `lock_lifetime`: Number of seconds before the lock will expire on its own. Defaults to `node['lock_rdlm']['lifetime']`
 
-### MutexRDLM::with\_lock
+### LockRDLM::with\_lock
 Yields (runs a code block) while locking the resource specified on the lock.  
 Parameters:
 
@@ -47,7 +47,7 @@ Example:
 
 ```ruby
 # Add apple to databag if it has none
-MutexRDLM::with_lock(node,'dbvendingjuice') do
+LockRDLM::with_lock(node,'dbvendingjuice') do
   db=data_bag_item('vending','juice')
   db['kinds']<<'apple' unless db['kinds'].member? 'apple'
   db.save
@@ -55,7 +55,7 @@ end
 ```
 This will ensure the databag has only one `apple` item, even if several clients run this recipe at the same time.
 
-### MutexRDLM::assign\_identity
+### LockRDLM::assign\_identity
 
 Used to assign a unique identity.  
 Parameters:
@@ -92,7 +92,7 @@ Assuming a working and reachable lock server:
     * `lock_wait = 5`
     * `lock_lifetime = 300`
 2. Current value of attribute is checked (`node[:slasher][:id]`). If not-empty, function returns. Assuming empty
-3. Mutex is locked for a normalized version of the `assignment_path` (`slasherid`)
+3. Lock is locked for a normalized version of the `assignment_path` (`slasherid`)
 4. If lock can't be locked for some reason, raise error
 5. All node objects on Chef server are enumerated for that value. Resulting collection is filtered out from range.
 6. Take a single element from range (`first`). If empty, raise error (release lock before). Assuming got `3`.
@@ -101,7 +101,7 @@ Assuming a working and reachable lock server:
 9. Release lock
 10. Return 3
 
-### MutexRDLM::find\_duplicate\_identity
+### LockRDLM::find\_duplicate\_identity
 Parameters:
 
 * `node`: Calling node's object
